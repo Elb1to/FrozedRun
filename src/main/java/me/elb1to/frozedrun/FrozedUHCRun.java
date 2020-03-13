@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.elb1to.frozedrun.commands.FrozedRunCommand;
 import me.elb1to.frozedrun.listeners.ItemDropListeners;
+import me.elb1to.frozedrun.managers.RecipesManager;
 import me.elb1to.frozedrun.scoreboard.ScoreboardLayout;
 import me.elb1to.frozedrun.utils.board.BoardManager;
 import me.elb1to.frozedrun.utils.chat.Color;
@@ -39,6 +40,7 @@ public class FrozedUHCRun extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ItemDropListeners(), this);
 
         // From the managers package
+        new RecipesManager(this);
 
         // From the commands package
         new FrozedRunCommand();
