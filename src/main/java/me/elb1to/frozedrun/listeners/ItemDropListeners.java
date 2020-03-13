@@ -14,85 +14,55 @@ import java.util.Random;
 public class ItemDropListeners implements Listener {
 
     Random random = new Random();
-    int randomFoodAmount = random.nextInt(3);
-    int randomUtilAmount = random.nextInt(2);
-    int specialItemAmount = random.nextInt(1);
 
     @EventHandler
-    public void onCowDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Cow) {
-            Bukkit.getServer().broadcastMessage(Color.translate("&aHas asesinado a una vaca!"));
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.COOKED_BEEF, randomFoodAmount));
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.LEATHER, randomUtilAmount));
+    public void onEntityDeath(EntityDeathEvent event) {
+        switch (event.getEntityType()) {
+            case COW:
+            case MUSHROOM_COW:
+            case HORSE:
+            case SHEEP:
+                event.getDrops().clear();
+                event.getDrops().add(new ItemStack(Material.LEATHER, getRandomUA()));
+                event.getDrops().add(new ItemStack(Material.COOKED_BEEF, getRandomFA()));
+                break;
+            case PIG:
+                event.getDrops().clear();
+                event.getDrops().add(new ItemStack(Material.GRILLED_PORK, getRandomFA()));
+                break;
+            case CHICKEN:
+                event.getDrops().clear();
+                event.getDrops().add(new ItemStack(Material.COOKED_CHICKEN, getRandomFA()));
+                event.getDrops().add(new ItemStack(Material.ARROW, getRandomUA()));
+                break;
+            case WITCH:
+                event.getDrops().clear();
+                event.getDrops().add(new ItemStack(Material.POTION, getRandomSA(), (short) 16421));
         }
     }
 
-    @EventHandler
-    public void onHorseDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Horse) {
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.COOKED_BEEF, randomFoodAmount));
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.LEATHER, randomUtilAmount));
+    public int getRandomFA() {
+        int randomFA = random.nextInt(3);
+        if (randomFA == 0) {
+            randomFA++;
         }
+        return randomFA;
     }
 
-    @EventHandler
-    public void onSheepDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Sheep) {
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.COOKED_BEEF, randomFoodAmount));
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.LEATHER, randomUtilAmount));
+    public int getRandomUA() {
+        int randomUA = random.nextInt(4);
+        if (randomUA == 0) {
+            randomUA++;
         }
+        return randomUA;
     }
 
-    @EventHandler
-    public void onPigDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Pig) {
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.GRILLED_PORK, randomFoodAmount));
+    public int getRandomSA() {
+        int randomSA = random.nextInt(4);
+        if (randomSA == 0) {
+            randomSA++;
         }
-    }
-
-    @EventHandler
-    public void onChickenDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Chicken) {
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.COOKED_CHICKEN, randomFoodAmount));
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.ARROW, randomUtilAmount));
-        }
-    }
-
-    @EventHandler
-    public void onVillagerDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Villager) {
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.DIAMOND, specialItemAmount));
-        }
-    }
-
-    @EventHandler
-    public void onMushroomCowDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof MushroomCow) {
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.MUSHROOM_SOUP, randomFoodAmount));
-        }
-    }
-
-    @EventHandler
-    public void onOcelotDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Ocelot) {
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.COOKED_FISH, randomFoodAmount));
-        }
-    }
-
-    @EventHandler
-    public void onWitchDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Witch) {
-            event.getDrops().clear();
-            event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.POTION, specialItemAmount, (short) 16421));
-        }
+        return randomSA;
     }
 
 }
