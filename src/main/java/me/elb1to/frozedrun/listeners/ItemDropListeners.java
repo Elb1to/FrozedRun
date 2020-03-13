@@ -1,5 +1,7 @@
 package me.elb1to.frozedrun.listeners;
 
+import me.elb1to.frozedrun.utils.chat.Color;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -19,6 +21,7 @@ public class ItemDropListeners implements Listener {
     @EventHandler
     public void onCowDeath(EntityDeathEvent event) {
         if (event.getEntity() instanceof Cow) {
+            Bukkit.getServer().broadcastMessage(Color.translate("&aHas asesinado a una vaca!"));
             event.getDrops().clear();
             event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.COOKED_BEEF, randomFoodAmount));
             event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), new ItemStack(Material.LEATHER, randomUtilAmount));
