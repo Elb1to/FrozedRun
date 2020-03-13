@@ -17,26 +17,23 @@ public class ItemDropListeners implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
+        event.getDrops().clear();
         switch (event.getEntityType()) {
             case COW:
             case MUSHROOM_COW:
             case HORSE:
             case SHEEP:
-                event.getDrops().clear();
                 event.getDrops().add(new ItemStack(Material.LEATHER, getRandomUA()));
                 event.getDrops().add(new ItemStack(Material.COOKED_BEEF, getRandomFA()));
                 break;
             case PIG:
-                event.getDrops().clear();
                 event.getDrops().add(new ItemStack(Material.GRILLED_PORK, getRandomFA()));
                 break;
             case CHICKEN:
-                event.getDrops().clear();
                 event.getDrops().add(new ItemStack(Material.COOKED_CHICKEN, getRandomFA()));
                 event.getDrops().add(new ItemStack(Material.ARROW, getRandomUA()));
                 break;
             case WITCH:
-                event.getDrops().clear();
                 event.getDrops().add(new ItemStack(Material.POTION, getRandomSA(), (short) 16421));
         }
     }
