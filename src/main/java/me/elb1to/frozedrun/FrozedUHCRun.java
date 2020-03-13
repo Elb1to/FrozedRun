@@ -1,20 +1,28 @@
 package me.elb1to.frozedrun;
 
+import lombok.Getter;
+import me.elb1to.frozedrun.commands.FrozedRunCommand;
 import me.elb1to.frozedrun.listeners.ItemDropListeners;
 import me.elb1to.frozedrun.scoreboard.ScoreboardLayout;
 import me.elb1to.frozedrun.utils.board.BoardManager;
 import me.elb1to.frozedrun.utils.chat.Color;
+import me.elb1to.frozedrun.utils.command.CommandFramework;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FrozedUHCRun extends JavaPlugin {
 
-    private static FrozedUHCRun FrozedUHCRun;
+    @Getter
+    public static FrozedUHCRun instance;
+    @Getter
+    private CommandFramework framework;
     private BoardManager boardManager;
 
     @Override
     public void onEnable() {
-        FrozedUHCRun = this;
+        instance = this;
+
+        framework = new CommandFramework(this);
 
         setBoardManager(new BoardManager(this, new ScoreboardLayout()));
 
@@ -32,8 +40,7 @@ public class FrozedUHCRun extends JavaPlugin {
         // From the managers package
 
         // From the commands package
-
-
+        new FrozedRunCommand();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -70,7 +77,4 @@ public class FrozedUHCRun extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(this.boardManager, this);
     }
 
-    public static FrozedUHCRun get() {
-        return FrozedUHCRun;
-    }
 }
