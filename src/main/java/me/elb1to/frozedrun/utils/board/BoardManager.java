@@ -127,7 +127,7 @@ public class BoardManager implements Runnable, Listener {
 
     public void addPlayer(Player player) {
         if (!getPlayerBoards().containsKey(player.getUniqueId())) {
-            getPlayerBoards().put(player.getUniqueId(), new Board(FrozedUHCRun.get(), player, getAdapter()));
+            getPlayerBoards().put(player.getUniqueId(), new Board(FrozedUHCRun.getInstance(), player, getAdapter()));
         }
     }
 
