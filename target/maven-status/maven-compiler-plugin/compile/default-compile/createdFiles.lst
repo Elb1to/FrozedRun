@@ -10,6 +10,7 @@ me\elb1to\frozedrun\utils\command\Command.class
 me\elb1to\frozedrun\utils\command\CommandFramework.class
 me\elb1to\frozedrun\utils\command\Completer.class
 me\elb1to\frozedrun\utils\board\BoardAdapter.class
+me\elb1to\frozedrun\managers\RecipesManager.class
 me\elb1to\frozedrun\utils\board\Board.class
 me\elb1to\frozedrun\utils\command\CommandArgs.class
 me\elb1to\frozedrun\utils\board\BoardEntry.class
