@@ -27,17 +27,17 @@ public class RecipesManager {
         createAxeRecipe(Material.GOLD_INGOT, Material.GOLD_AXE, Enchantment.DIG_SPEED, 2);
         createAxeRecipe(Material.DIAMOND, Material.DIAMOND_AXE, Enchantment.DIG_SPEED, 3);
         //Shovels
-        createShovelRecipe(Material.WOOD, Material.STONE_AXE, Enchantment.DIG_SPEED, 1);
-        createShovelRecipe(Material.COBBLESTONE, Material.IRON_AXE, Enchantment.DIG_SPEED, 1);
-        createShovelRecipe(Material.IRON_INGOT, Material.DIAMOND_AXE, Enchantment.DIG_SPEED, 1);
-        createShovelRecipe(Material.GOLD_INGOT, Material.GOLD_AXE, Enchantment.DIG_SPEED, 2);
-        createShovelRecipe(Material.DIAMOND, Material.DIAMOND_AXE, Enchantment.DIG_SPEED, 3);
+        createShovelRecipe(Material.WOOD, Material.STONE_SPADE, Enchantment.DIG_SPEED, 1);
+        createShovelRecipe(Material.COBBLESTONE, Material.IRON_SPADE, Enchantment.DIG_SPEED, 1);
+        createShovelRecipe(Material.IRON_INGOT, Material.DIAMOND_SPADE, Enchantment.DIG_SPEED, 1);
+        createShovelRecipe(Material.GOLD_INGOT, Material.GOLD_SPADE, Enchantment.DIG_SPEED, 2);
+        createShovelRecipe(Material.DIAMOND, Material.DIAMOND_SPADE, Enchantment.DIG_SPEED, 3);
         //Hoes
-        createHoeRecipe(Material.WOOD, Material.STONE_AXE, Enchantment.DIG_SPEED, 1);
-        createHoeRecipe(Material.COBBLESTONE, Material.IRON_AXE, Enchantment.DIG_SPEED, 1);
-        createHoeRecipe(Material.IRON_INGOT, Material.DIAMOND_AXE, Enchantment.DIG_SPEED, 1);
-        createHoeRecipe(Material.GOLD_INGOT, Material.GOLD_AXE, Enchantment.DIG_SPEED, 2);
-        createHoeRecipe(Material.DIAMOND, Material.DIAMOND_AXE, Enchantment.DIG_SPEED, 3);
+        createHoeRecipe(Material.WOOD, Material.STONE_HOE, Enchantment.DIG_SPEED, 1);
+        createHoeRecipe(Material.COBBLESTONE, Material.IRON_HOE, Enchantment.DIG_SPEED, 1);
+        createHoeRecipe(Material.IRON_INGOT, Material.DIAMOND_HOE, Enchantment.DIG_SPEED, 1);
+        createHoeRecipe(Material.GOLD_INGOT, Material.GOLD_HOE, Enchantment.DIG_SPEED, 2);
+        createHoeRecipe(Material.DIAMOND, Material.DIAMOND_HOE, Enchantment.DIG_SPEED, 3);
     }
 
     public void createPickaxeRecipe(Material blockType, Material pickaxeType, Enchantment enchantment, int amplifier) {
