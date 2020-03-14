@@ -26,6 +26,9 @@ public class RecipesManager {
         createAxeRecipe(Material.IRON_INGOT, Material.DIAMOND_AXE, Enchantment.DIG_SPEED, 1);
         createAxeRecipe(Material.GOLD_INGOT, Material.GOLD_AXE, Enchantment.DIG_SPEED, 2);
         createAxeRecipe(Material.DIAMOND, Material.DIAMOND_AXE, Enchantment.DIG_SPEED, 3);
+        //Shovels
+
+        //Hoes
     }
 
     public void createPickaxeRecipe(Material blockType, Material pickaxeType, Enchantment enchantment, int amplifier) {
@@ -52,6 +55,32 @@ public class RecipesManager {
         pickaxeRecipe.setIngredient('X', blockType);
 
         Bukkit.getServer().addRecipe(pickaxeRecipe);
+    }
+
+    public void createShovelRecipe(Material blockType, Material pickaxeType, Enchantment enchantment, int amplifier) {
+        ItemStack shovel = new ItemStack(pickaxeType, 1);
+        ItemMeta itemMeta = shovel.getItemMeta();
+
+        itemMeta.addEnchant(Enchantment.DURABILITY, 3, false);
+        itemMeta.addEnchant(enchantment, amplifier, false);
+
+        shovel.setItemMeta(itemMeta);
+
+        Iterator<Recipe> iterator = Bukkit.getServer().recipeIterator();
+        Recipe recipe;
+        while (iterator.hasNext()) {
+            recipe = iterator.next();
+            if (recipe != null && (recipe.getResult().getType() == pickaxeType || recipe.getResult().getType() == Material.WOOD_SPADE)) {
+                iterator.remove();
+            }
+        }
+
+        ShapedRecipe shovelRecipe = new ShapedRecipe(shovel);
+        shovelRecipe.shape(" X ", " # ", " # ");
+        shovelRecipe.setIngredient('#', Material.STICK);
+        shovelRecipe.setIngredient('X', blockType);
+
+        Bukkit.getServer().addRecipe(shovelRecipe);
     }
 
     public void createAxeRecipe(Material blockType, Material axeType, Enchantment enchantment, int amplifier) {
@@ -84,6 +113,38 @@ public class RecipesManager {
 
         Bukkit.getServer().addRecipe(leftAxeRecipe);
         Bukkit.getServer().addRecipe(rightAxeRecipe);
+    }
+
+    public void createHoeRecipe(Material blockType, Material axeType, Enchantment enchantment, int amplifier) {
+        ItemStack hoe = new ItemStack(axeType, 1);
+        ItemMeta itemMeta = hoe.getItemMeta();
+
+        itemMeta.addEnchant(Enchantment.DURABILITY, 3, false);
+        itemMeta.addEnchant(enchantment, amplifier, false);
+
+        hoe.setItemMeta(itemMeta);
+
+        Iterator<Recipe> iterator = Bukkit.getServer().recipeIterator();
+        Recipe recipe;
+        while (iterator.hasNext()) {
+            recipe = iterator.next();
+            if (recipe != null && (recipe.getResult().getType() == axeType || recipe.getResult().getType() == Material.WOOD_HOE)) {
+                iterator.remove();
+            }
+        }
+
+        ShapedRecipe leftHoeRecipe = new ShapedRecipe(hoe);
+        leftHoeRecipe.shape("XX ", " # ", " # ");
+        leftHoeRecipe.setIngredient('#', Material.STICK);
+        leftHoeRecipe.setIngredient('X', blockType);
+
+        ShapedRecipe rightHoeRecipe = new ShapedRecipe(hoe);
+        rightHoeRecipe.shape(" XX", " # ", " # ");
+        rightHoeRecipe.setIngredient('#', Material.STICK);
+        rightHoeRecipe.setIngredient('X', blockType);
+
+        Bukkit.getServer().addRecipe(rightHoeRecipe);
+        Bukkit.getServer().addRecipe(rightHoeRecipe);
     }
 
 }
