@@ -66,8 +66,8 @@ public class RecipesManager {
         Bukkit.getServer().addRecipe(pickaxeRecipe);
     }
 
-    public void createShovelRecipe(Material blockType, Material pickaxeType, Enchantment enchantment, int amplifier) {
-        ItemStack shovel = new ItemStack(pickaxeType, 1);
+    public void createShovelRecipe(Material blockType, Material shovelType, Enchantment enchantment, int amplifier) {
+        ItemStack shovel = new ItemStack(shovelType, 1);
         ItemMeta itemMeta = shovel.getItemMeta();
 
         itemMeta.addEnchant(Enchantment.DURABILITY, 3, false);
@@ -79,7 +79,7 @@ public class RecipesManager {
         Recipe recipe;
         while (iterator.hasNext()) {
             recipe = iterator.next();
-            if (recipe != null && (recipe.getResult().getType() == pickaxeType || recipe.getResult().getType() == Material.WOOD_SPADE)) {
+            if (recipe != null && (recipe.getResult().getType() == shovelType || recipe.getResult().getType() == Material.WOOD_SPADE)) {
                 iterator.remove();
             }
         }
@@ -124,8 +124,8 @@ public class RecipesManager {
         Bukkit.getServer().addRecipe(rightAxeRecipe);
     }
 
-    public void createHoeRecipe(Material blockType, Material axeType, Enchantment enchantment, int amplifier) {
-        ItemStack hoe = new ItemStack(axeType, 1);
+    public void createHoeRecipe(Material blockType, Material hoeType, Enchantment enchantment, int amplifier) {
+        ItemStack hoe = new ItemStack(hoeType, 1);
         ItemMeta itemMeta = hoe.getItemMeta();
 
         itemMeta.addEnchant(Enchantment.DURABILITY, 3, false);
@@ -137,7 +137,7 @@ public class RecipesManager {
         Recipe recipe;
         while (iterator.hasNext()) {
             recipe = iterator.next();
-            if (recipe != null && (recipe.getResult().getType() == axeType || recipe.getResult().getType() == Material.WOOD_HOE)) {
+            if (recipe != null && (recipe.getResult().getType() == hoeType || recipe.getResult().getType() == Material.WOOD_HOE)) {
                 iterator.remove();
             }
         }

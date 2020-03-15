@@ -9,8 +9,12 @@ import me.elb1to.frozedrun.scoreboard.ScoreboardLayout;
 import me.elb1to.frozedrun.utils.board.BoardManager;
 import me.elb1to.frozedrun.utils.chat.Color;
 import me.elb1to.frozedrun.utils.command.CommandFramework;
+import me.elb1to.frozedrun.utils.config.ConfigFile;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +23,7 @@ public class FrozedUHCRun extends JavaPlugin {
     @Getter
     public static FrozedUHCRun instance;
     private CommandFramework framework;
+    private List<ConfigFile> files = new ArrayList<>();
     private BoardManager boardManager;
 
     @Override
@@ -50,19 +55,25 @@ public class FrozedUHCRun extends JavaPlugin {
 
         checkLicense();
 
+        Bukkit.getConsoleSender().sendMessage(" ");
         Bukkit.getConsoleSender().sendMessage(Color.translate("&7&m--------------------------------------------------------------"));
         Bukkit.getConsoleSender().sendMessage(Color.translate("&3This server is using &bFrozedRun"));
         Bukkit.getConsoleSender().sendMessage(Color.translate("&3Author&7: &bElb1to"));
-        Bukkit.getConsoleSender().sendMessage(Color.translate("&3Version&7: &bv" + getDescription().getVersion()));
+        Bukkit.getConsoleSender().sendMessage(Color.translate("&3Version&7: &b" + getDescription().getVersion()));
         Bukkit.getConsoleSender().sendMessage(Color.translate("&7&m--------------------------------------------------------------"));
         Bukkit.getConsoleSender().sendMessage(" ");
         Bukkit.getConsoleSender().sendMessage(Color.translate("&bChecking your spigot version..."));
         Bukkit.getConsoleSender().sendMessage(Color.translate("&aSuccess! &bYour Server NMS version: " + getNmsVersion()));
+        Bukkit.getConsoleSender().sendMessage(" ");
     }
 
     @Override
     public void onDisable() {
         getServer().getConsoleSender().sendMessage(Color.translate("&8[&b&lFrozedRun&8] &3has been disabled!"));
+    }
+
+    public ConfigFile getConfiguration(String name) {
+        return files.stream().filter(config -> config.getName().equals(name)).findFirst().orElse(null);
     }
 
     private String getNmsVersion() {

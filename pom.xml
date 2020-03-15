@@ -22,11 +22,21 @@
             <version>1.16.16</version>
             <scope>provided</scope>
         </dependency>
-        <!-- <dependency>
+        <!--
+        <dependency>
+            <groupId>com.broustudio</groupId>
+            <artifactId>mizu-api</artifactId>
+            <version>MizuAPI</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/Elb1to/IdeaProjects/libs/MizuAPI.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
             <version>3.12.1</version>
-        </dependency> -->
+        </dependency>
+        -->
     </dependencies>
 
     <properties>
