@@ -3,8 +3,14 @@ package me.elb1to.frozedrun;
 import lombok.Getter;
 import lombok.Setter;
 import me.elb1to.frozedrun.commands.FrozedRunCommand;
+import me.elb1to.frozedrun.commands.ScatterCommand;
 import me.elb1to.frozedrun.listeners.ItemDropListeners;
+import me.elb1to.frozedrun.listeners.WorldListener;
+import me.elb1to.frozedrun.managers.MatchManager;
+import me.elb1to.frozedrun.managers.PlayerDataManager;
+import me.elb1to.frozedrun.managers.PlayerManager;
 import me.elb1to.frozedrun.managers.RecipesManager;
+import me.elb1to.frozedrun.player.PlayerData;
 import me.elb1to.frozedrun.scoreboard.ScoreboardLayout;
 import me.elb1to.frozedrun.utils.board.BoardManager;
 import me.elb1to.frozedrun.utils.chat.Color;
@@ -43,12 +49,17 @@ public class FrozedUHCRun extends JavaPlugin {
 
         // From the listeners package
         Bukkit.getPluginManager().registerEvents(new ItemDropListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
 
         // From the managers package
         new RecipesManager(this);
+        new PlayerDataManager();
+        new PlayerManager();
+        new MatchManager();
 
         // From the commands package
         new FrozedRunCommand();
+        new ScatterCommand();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

@@ -1,5 +1,6 @@
 package me.elb1to.frozedrun.managers;
 
+import lombok.Data;
 import lombok.Getter;
 import me.elb1to.frozedrun.enums.PlayerState;
 import me.elb1to.frozedrun.utils.Utils;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 public class PlayerManager {
 
     @Getter
