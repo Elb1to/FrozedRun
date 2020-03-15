@@ -12,7 +12,7 @@ public class MatchManager {
     @Getter
     public static MatchManager instance;
     private MatchState matchState = MatchState.LOBBY;
-    private String frozedRunPrefix = Color.translate(FrozedUHCRun.getInstance().getConfiguration("config").getString("PREFIXES.GAME"));
+    private String gamePrefix = Color.translate(FrozedUHCRun.getInstance().getConfiguration("config").getString("PREFIXES.GAME"));
     private String tsInfo = FrozedUHCRun.getInstance().getConfiguration("config").getString("INFORMATIONS.TS");
     private String webInfo = FrozedUHCRun.getInstance().getConfiguration("config").getString("INFORMATIONS.WEB");
     private String ipInfo = FrozedUHCRun.getInstance().getConfiguration("config").getString("INFORMATIONS.IP");
