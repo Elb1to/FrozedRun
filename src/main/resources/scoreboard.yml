@@ -1,0 +1,21 @@
+title: "&b&lFrozed <I> UHCRun"
+enabled: "&aenabled"
+disabled: "&cdisabled"
+
+border-info:
+  minutes: "&7(&6<minutes>m&7)"
+  seconds: "&7(&6<seconds>s&7)"
+
+lobby-scoreboard:
+  - "&7&m----------------"
+  - "&eGame State:"
+  - " &fLobby"
+  - " "
+  - "&eStatus:"
+  - " &fWaiting..."
+  - " "
+  - "&eRequired:"
+  - " &f<require_players> to start"
+  - " "
+  - "&e<server_ip>"
+  - "&7&m----------------"

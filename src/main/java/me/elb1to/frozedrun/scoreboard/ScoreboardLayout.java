@@ -1,6 +1,7 @@
 package me.elb1to.frozedrun.scoreboard;
 
 import me.elb1to.frozedrun.FrozedUHCRun;
+import me.elb1to.frozedrun.enums.MatchState;
 import me.elb1to.frozedrun.managers.MatchManager;
 import me.elb1to.frozedrun.managers.PlayerDataManager;
 import me.elb1to.frozedrun.managers.PlayerManager;
@@ -35,28 +36,27 @@ public class ScoreboardLayout implements BoardAdapter {
     private List<String> getPlayerScoreboard(Player player) {
         List<String> board = new ArrayList<>();
         PlayerData data = PlayerDataManager.getInstance().getByUUID(player.getUniqueId());
-        GameManager gameManager = GameManager.getInstance();
+        MatchManager matchManager = MatchManager.getInstance();
         PlayerManager playerManager = PlayerManager.getInstance();
 
-        if (data.getSettingByName("Scoreboard") != null && !data.getSettingByName("Scoreboard").isEnabled()) {
-            return board;
-        }
-        if (gameManager.getGameState() == GameState.LOBBY) {
-            if (PlayerManager.getInstance().getLobbyPlayers().size() < GameManager.getInstance().getMinPlayers()) {
+        if (matchManager.getMatchState() == MatchState.LOBBY) {
+            if (PlayerManager.getInstance().getLobbyPlayers().size() < MatchManager.getInstance().getMinPlayers()) {
                 for (String string : FrozedUHCRun.getInstance().getConfiguration("scoreboard").getStringList("lobby-scoreboard")) {
                     board.add(replace(string, player));
                 }
-            } else if (gameManager.getStartCountdown() != null && !gameManager.getStartCountdown().hasExpired()) {
+            }/* else if (matchManager.getStartCountdown() != null && !matchManager.getStartCountdown().hasExpired()) {
                 for (String string : FrozedUHCRun.getInstance().getConfiguration("scoreboard").getStringList("lobby-countdown-scoreboard")) {
                     board.add(replace(string, player));
                 }
-            }
+            }*/
         }
-        if (gameManager.getGameState() == GameState.PREMATCH) {
+
+        /*if (gameManager.getGameState() == GameState.PREMATCH) {
             for (String string : FrozedUHCRun.getInstance().getConfiguration("scoreboard").getStringList("pre-match-scoreboard")) {
                 board.add(replace(string, player));
             }
         }
+
         if (gameManager.getGameState() == GameState.INGAME) {
             if (gameManager.getPvpCountdown() != null && !gameManager.getPvpCountdown().hasExpired()) {
                 for (String string : FrozedUHCRun.getInstance().getConfiguration("scoreboard").getStringList("pvp-countdown-scoreboard")) {
@@ -76,11 +76,13 @@ public class ScoreboardLayout implements BoardAdapter {
                 }
             }
         }
+
         if (gameManager.getGameState() == GameState.ENDING) {
             for (String string : FrozedUHCRun.getInstance().getConfiguration("scoreboard").getStringList("winner-scoreboard")) {
                 board.add(replace(string, player));
             }
-        }
+        }*/
+
         return board;
     }
 
@@ -99,16 +101,16 @@ public class ScoreboardLayout implements BoardAdapter {
         MatchManager matchManager = MatchManager.getInstance();
         PlayerManager playerManager = PlayerManager.getInstance();
         return string
-                .replaceAll("<server_name>", gameManager.getServerName())
+                .replaceAll("<server_name>", matchManager.getServerName())
                 //.replaceAll("<spectator_chat_boolean>", (data.isSpecChat() ? FrozedUHCRun.getInstance().getConfiguration("scoreboard").getString("enabled") : FrozedUHCRun.getInstance().getConfiguration("scoreboard").getString("disabled")))
-                .replaceAll("<require_players>", String.valueOf(gameManager.getRequiredPlayersToJoin()))
+                .replaceAll("<require_players>", String.valueOf(matchManager.getRequiredPlayersToJoin()))
                 /*.replaceAll("<prematch_players_size>", String.valueOf(playerManager.getPrematchPlayers().size()))
                 .replaceAll("<game_players>", String.valueOf(playerManager.getGamePlayers().size()))*/
-                .replaceAll("<max_players>", String.valueOf(gameManager.getMaxPlayers()))
+                .replaceAll("<max_players>", String.valueOf(matchManager.getMaxPlayers()))
                 /*.replaceAll("<countdown_players>", String.valueOf(playerManager.getLobbyPlayers().size()))
                 .replaceAll("<player_kills>", String.valueOf(data.getGameKills().getAmount()))*/
                 .replaceAll("<player_ping>", String.valueOf(((CraftPlayer) player).getHandle().ping))
-                .replaceAll("<server_ip>", gameManager.getIpInfo())
+                .replaceAll("<server_ip>", matchManager.getIpInfo())
                 /*.replaceAll("<winner>", gameManager.getWinner())
                 .replaceAll("<winner_kills>", String.valueOf(gameManager.getWinnerKills()))*/
 

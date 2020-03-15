@@ -7,8 +7,27 @@ MONGODB:
     USERNAME: 'mongoUser'
     PASSWORD: 'mongoPassword'
     DATABASE: 'mongoBase'
+
 ANNOUNCE:
   ENABLED: true
   BUNGEE: true
   FORMAT: '&7[&b<server_name>] &f<player_display_name>&7: &6Come play &f<server_name> &6by typing &f/server <server_name>'
-Prefix:
+
+PREFIXES:
+  GAME: '&8[&b&lFrozedRun&8] '
+
+INFORMATIONS:
+  WEB: www.frozed.club
+  IP: frozed.club
+  TS: ts.frozed.club
+  STORE: store.frozed.club
+  SERVER: FUR-1
+
+MINIMUM-PLAYERS-TO-START-GAME: 2
+MAXIMUM-PLAYERS-PER-GAME: 64
+
+BORDER:
+  SIZE: 250
+
+
+REBOOT_COMMAND: stop
