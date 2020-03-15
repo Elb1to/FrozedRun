@@ -17,9 +17,13 @@ import me.elb1to.frozedrun.utils.chat.Color;
 import me.elb1to.frozedrun.utils.command.CommandFramework;
 import me.elb1to.frozedrun.utils.config.ConfigFile;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -31,13 +35,17 @@ public class FrozedUHCRun extends JavaPlugin {
     private CommandFramework framework;
     private List<ConfigFile> files = new ArrayList<>();
     private BoardManager boardManager;
+    private HashMap<Player, Location> scatterLocation;
+    private MatchManager matchManager;
 
     @Override
     public void onEnable() {
         instance = this;
         framework = new CommandFramework(this);
 
-        //setBoardManager(new BoardManager(this, new ScoreboardLayout()));
+        registerConfigurations();
+
+        setBoardManager(new BoardManager(this, new ScoreboardLayout()));
 
         if (!this.getDescription().getAuthors().contains("Elb1to") ||
                 !this.getDescription().getName().equals("FrozedRun") ||
@@ -87,6 +95,13 @@ public class FrozedUHCRun extends JavaPlugin {
         return files.stream().filter(config -> config.getName().equals(name)).findFirst().orElse(null);
     }
 
+    public void registerConfigurations() {
+        files.addAll(Arrays.asList(
+                new ConfigFile("config"),
+                new ConfigFile("scoreboard")
+        ));
+    }
+
     private String getNmsVersion() {
         return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
     }
@@ -100,6 +115,14 @@ public class FrozedUHCRun extends JavaPlugin {
         long interval = this.boardManager.getAdapter().getInterval();
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.boardManager, interval, interval);
         this.getServer().getPluginManager().registerEvents(this.boardManager, this);
+    }
+
+    public HashMap<Player, Location> getScatterLocation() {
+        return scatterLocation;
+    }
+
+    public MatchManager getMatchManager() {
+        return matchManager;
     }
 
 }
