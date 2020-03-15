@@ -36,11 +36,11 @@ public class ScoreboardLayout implements BoardAdapter {
     private List<String> getPlayerScoreboard(Player player) {
         List<String> board = new ArrayList<>();
         PlayerData data = PlayerDataManager.getInstance().getByUUID(player.getUniqueId());
-        MatchManager matchManager = MatchManager.getInstance();
+        MatchManager matchManager = MatchManager.instance;
         PlayerManager playerManager = PlayerManager.getInstance();
 
         if (matchManager.getMatchState() == MatchState.LOBBY) {
-            if (PlayerManager.getInstance().getLobbyPlayers().size() < MatchManager.getInstance().getMinPlayers()) {
+            //if (PlayerManager.getInstance().getLobbyPlayers().size() < MatchManager.getInstance().getMinPlayers()) {
                 for (String string : FrozedUHCRun.getInstance().getConfiguration("scoreboard").getStringList("lobby-scoreboard")) {
                     board.add(replace(string, player));
                 }
@@ -49,7 +49,7 @@ public class ScoreboardLayout implements BoardAdapter {
                     board.add(replace(string, player));
                 }
             }*/
-        }
+        //}
 
         /*if (gameManager.getGameState() == GameState.PREMATCH) {
             for (String string : FrozedUHCRun.getInstance().getConfiguration("scoreboard").getStringList("pre-match-scoreboard")) {
@@ -98,7 +98,7 @@ public class ScoreboardLayout implements BoardAdapter {
 
     public String replace(String string, Player player) {
         PlayerData data = PlayerDataManager.getInstance().getByUUID(player.getUniqueId());
-        MatchManager matchManager = MatchManager.getInstance();
+        MatchManager matchManager = MatchManager.instance;
         PlayerManager playerManager = PlayerManager.getInstance();
         return string
                 .replaceAll("<server_name>", matchManager.getServerName())
