@@ -8,6 +8,7 @@ public class WorldSounds {
     private Location location;
 
     public WorldSounds(Location location) {
+        location = location;
 
     }
 
