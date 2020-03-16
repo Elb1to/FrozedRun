@@ -7,9 +7,8 @@ public class Sounds {
 
     private Player player;
 
-    public Sounds(Player player) {
-        player = player;
-
+    public Sounds(Player p) {
+        player = p;
     }
 
     public void playSound(Sound sound){
