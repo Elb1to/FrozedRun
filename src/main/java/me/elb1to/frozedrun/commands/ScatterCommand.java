@@ -1,7 +1,6 @@
 package me.elb1to.frozedrun.commands;
 
 import me.elb1to.frozedrun.FrozedUHCRun;
-import me.elb1to.frozedrun.managers.MatchManager;
 import me.elb1to.frozedrun.utils.chat.Color;
 import me.elb1to.frozedrun.utils.command.BaseCommand;
 import me.elb1to.frozedrun.utils.command.Command;
@@ -9,14 +8,13 @@ import me.elb1to.frozedrun.utils.command.CommandArgs;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
 public class ScatterCommand extends BaseCommand {
-
-    private FrozedUHCRun match = FrozedUHCRun.getInstance();
 
     @Command(name = "scatter", permission = "frozedrun.scatter")
     public void onCommand(CommandArgs command) {
@@ -40,10 +38,10 @@ public class ScatterCommand extends BaseCommand {
         int z = randomLocation.nextInt(FrozedUHCRun.getInstance().getConfiguration("config").getInt("BORDER.SIZE") - 1);
         int y = Bukkit.getWorld("world").getHighestBlockYAt(x, z);
 
-        Location location = new Location(Bukkit.getWorld("world"), x, y ,z);
+        World world = target.getWorld();
+        Location randomLoc = new Location(world, x, y, z);
 
-        match.getMatchManager().setScatterLocation(target, location);
-        target.teleport(match.getScatterLocation().get(target));
+        target.teleport(randomLoc);
         target.getInventory().addItem(new ItemStack(Material.COOKED_BEEF));
     }
 }
