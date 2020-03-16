@@ -8,6 +8,7 @@ public class Sounds {
     private Player player;
 
     public Sounds(Player player) {
+        player = player;
 
     }
 
