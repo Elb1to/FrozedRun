@@ -1,53 +1,61 @@
 package me.elb1to.frozedrun.managers;
 
-import lombok.Data;
-import lombok.Getter;
 import me.elb1to.frozedrun.FrozedUHCRun;
 import me.elb1to.frozedrun.enums.MatchState;
-import me.elb1to.frozedrun.utils.chat.Color;
+import me.elb1to.frozedrun.utils.Title;
+import me.elb1to.frozedrun.utils.tasks.ScatterTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-import java.util.Random;
+import java.util.UUID;
 
-@Data
 public class MatchManager {
 
-    @Getter
-    private FrozedUHCRun match = FrozedUHCRun.getInstance();
-    public static MatchManager instance;
-    private MatchState matchState = MatchState.LOBBY;
-    private String gamePrefix = Color.translate(FrozedUHCRun.getInstance().getConfiguration("config").getString("PREFIXES.GAME"));
-    private String tsInfo = FrozedUHCRun.getInstance().getConfiguration("config").getString("INFORMATIONS.TS");
-    private String webInfo = FrozedUHCRun.getInstance().getConfiguration("config").getString("INFORMATIONS.WEB");
-    private String ipInfo = FrozedUHCRun.getInstance().getConfiguration("config").getString("INFORMATIONS.IP");
-    private String storeInfo = FrozedUHCRun.getInstance().getConfiguration("config").getString("INFORMATIONS.STORE");
-    private String serverName = FrozedUHCRun.getInstance().getConfiguration("config").getString("INFORMATIONS.SERVER");
-    private int maxPlayers = FrozedUHCRun.getInstance().getConfiguration("config").getInt("MAXIMUM-PLAYERS-PER-GAME");
-    private int minPlayers = FrozedUHCRun.getInstance().getConfiguration("config").getInt("MINIMUM-PLAYERS-TO-START-GAME");
-    private String rebootCommand = FrozedUHCRun.getInstance().getConfiguration("config").getString("REBOOT_COMMAND");
+    static int timer = 0;
+    static int task;
 
+    public static void start() {
+        MatchState.setState(MatchState.INGAME);
 
-    public void setScatterLocation(Player player, Location location) {
-        match.getScatterLocation().put(player, location);
-    }
+        for(UUID uuid : FrozedUHCRun.getInstance().playersInGame){
+            Player player = Bukkit.getPlayer(uuid);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 1));
 
-    public void scatterPlayer(Player player, World world, int radius) {
+            ScatterTask.tpRandom(player);
+        }
 
-        Random random = new Random();
+        task = Bukkit.getScheduler().scheduleSyncRepeatingTask(FrozedUHCRun.getInstance(), new Runnable() {
 
-        int x = random.nextInt(radius - 1);
-        int z = random.nextInt(radius - 1);
-        int y = Bukkit.getWorld(world.getName()).getHighestBlockYAt(x, z);
+            @Override
+            public void run() {
+                timer--;
 
-        Location location = new Location(Bukkit.getWorld(world.getName()), x, y ,z);
+                if (timer == 30) {
+                    MatchState.setState(MatchState.INGAME);
+                }
 
-        player.teleport(location);
-    }
+                if (timer == 600) {
+                    Bukkit.getWorld("world").setPVP(true);
+                    MatchState.setState(MatchState.INPVP);
+                }
 
-    public int getRequiredPlayersToJoin() {
-        return getMinPlayers() - PlayerManager.getInstance().getLobbyPlayers().size();
+                if (timer <= 630) {
+                    if (timer > 0) {
+
+                    }
+                }
+
+                if (timer >= 900) {
+                    for (UUID uuid : FrozedUHCRun.getInstance().playersInGame) {
+                        Player player = Bukkit.getPlayer(uuid);
+                        player.teleport(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                        Title.sendTitle(player, "Frozed UHCRun", "The borders are closing!", 20);
+                    }
+                }
+            }
+        },20,20);
     }
 }
