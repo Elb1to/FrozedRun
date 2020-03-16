@@ -5,26 +5,21 @@ import lombok.Setter;
 import me.elb1to.frozedrun.commands.FrozedRunCommand;
 import me.elb1to.frozedrun.commands.ScatterCommand;
 import me.elb1to.frozedrun.listeners.ItemDropListeners;
+import me.elb1to.frozedrun.listeners.MatchPvP;
+import me.elb1to.frozedrun.listeners.PlayerListener;
 import me.elb1to.frozedrun.listeners.WorldListener;
+import me.elb1to.frozedrun.managers.EventsManager;
 import me.elb1to.frozedrun.managers.MatchManager;
-import me.elb1to.frozedrun.managers.PlayerDataManager;
-import me.elb1to.frozedrun.managers.PlayerManager;
 import me.elb1to.frozedrun.managers.RecipesManager;
-import me.elb1to.frozedrun.player.PlayerData;
-import me.elb1to.frozedrun.scoreboard.ScoreboardLayout;
 import me.elb1to.frozedrun.utils.board.BoardManager;
 import me.elb1to.frozedrun.utils.chat.Color;
 import me.elb1to.frozedrun.utils.command.CommandFramework;
 import me.elb1to.frozedrun.utils.config.ConfigFile;
+import me.elb1to.frozedrun.utils.tasks.MatchJoin;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -34,9 +29,8 @@ public class FrozedUHCRun extends JavaPlugin {
     public static FrozedUHCRun instance;
     private CommandFramework framework;
     private List<ConfigFile> files = new ArrayList<>();
+    public ArrayList<UUID> playersInGame = new ArrayList<>();
     private BoardManager boardManager;
-    private HashMap<Player, Location> scatterLocation;
-    private MatchManager matchManager;
 
     @Override
     public void onEnable() {
@@ -45,7 +39,7 @@ public class FrozedUHCRun extends JavaPlugin {
 
         registerConfigurations();
 
-        setBoardManager(new BoardManager(this, new ScoreboardLayout()));
+        //setBoardManager(new BoardManager(this, new ScoreboardLayout()));
 
         if (!this.getDescription().getAuthors().contains("Elb1to") ||
                 !this.getDescription().getName().equals("FrozedRun") ||
@@ -58,12 +52,14 @@ public class FrozedUHCRun extends JavaPlugin {
         // From the listeners package
         Bukkit.getPluginManager().registerEvents(new ItemDropListeners(), this);
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        Bukkit.getPluginManager().registerEvents(new MatchJoin(), this);
+        Bukkit.getPluginManager().registerEvents(new MatchPvP(), this);
 
         // From the managers package
         new RecipesManager(this);
-        new PlayerDataManager();
-        new PlayerManager();
         new MatchManager();
+        new EventsManager();
 
         // From the commands package
         new FrozedRunCommand();
@@ -115,14 +111,6 @@ public class FrozedUHCRun extends JavaPlugin {
         long interval = this.boardManager.getAdapter().getInterval();
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.boardManager, interval, interval);
         this.getServer().getPluginManager().registerEvents(this.boardManager, this);
-    }
-
-    public HashMap<Player, Location> getScatterLocation() {
-        return scatterLocation;
-    }
-
-    public MatchManager getMatchManager() {
-        return matchManager;
     }
 
 }
