@@ -20,6 +20,16 @@ public class ItemDropListeners implements Listener {
     public void onOreBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         switch (event.getBlock().getType()) {
+            case GRAVEL:
+                event.setCancelled(true);
+                event.getBlock().setType(Material.AIR);
+                event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.ARROW, 2));
+                break;
+            case SAND:
+                event.setCancelled(true);
+                event.getBlock().setType(Material.AIR);
+                event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.GLASS, 1));
+                break;
             case IRON_ORE:
                 if (hasRequiredTool(player) && player.getGameMode() != GameMode.CREATIVE) {
                     event.getBlock().getDrops().clear();
@@ -59,36 +69,34 @@ public class ItemDropListeners implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        event.getDrops().clear();
         switch (event.getEntityType()) {
             case COW:
             case MUSHROOM_COW:
             case HORSE:
+                event.getDrops().clear();
                 event.getDrops().add(new ItemStack(Material.LEATHER, getRandomUA()));
                 event.getDrops().add(new ItemStack(Material.COOKED_BEEF, getRandomFA()));
                 break;
             case SHEEP:
+                event.getDrops().clear();
                 event.getDrops().add(new ItemStack(Material.STRING, getRandomUA()));
                 event.getDrops().add(new ItemStack(Material.COOKED_BEEF, getRandomFA()));
                 break;
             case PIG:
+                event.getDrops().clear();
                 event.getDrops().add(new ItemStack(Material.GRILLED_PORK, getRandomFA()));
                 break;
             case CHICKEN:
+                event.getDrops().clear();
                 event.getDrops().add(new ItemStack(Material.COOKED_CHICKEN, getRandomFA()));
                 event.getDrops().add(new ItemStack(Material.ARROW, getRandomUA()));
-                break;
-            case WITCH:
-                event.getDrops().add(new ItemStack(Material.POTION, getRandomSA(), (short) 16421));
                 break;
         }
     }
 
     public boolean hasRequiredTool(Player player) {
-        if ((player.getItemInHand().getType() != Material.DIAMOND_PICKAXE) &&
-                (player.getItemInHand().getType() != Material.GOLD_PICKAXE) &&
-                (player.getItemInHand().getType() != Material.IRON_PICKAXE) &&
-                (player.getItemInHand().getType() != Material.STONE_PICKAXE)) {
+        if ((player.getItemInHand().getType() != Material.DIAMOND_PICKAXE) && (player.getItemInHand().getType() != Material.GOLD_PICKAXE) &&
+                (player.getItemInHand().getType() != Material.IRON_PICKAXE) && (player.getItemInHand().getType() != Material.STONE_PICKAXE)) {
             return false;
         } else
             return true;
