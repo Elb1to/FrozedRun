@@ -1,6 +1,6 @@
 package me.elb1to.frozedrun.utils.chat;
 
-import net.minecraft.util.org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 
 public class Symbols {
 
