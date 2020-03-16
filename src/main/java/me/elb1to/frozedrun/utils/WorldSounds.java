@@ -7,9 +7,8 @@ public class WorldSounds {
 
     private Location location;
 
-    public WorldSounds(Location location) {
-        location = location;
-
+    public WorldSounds(Location l) {
+        location = l;
     }
 
     public void playSound(Sound sound){
