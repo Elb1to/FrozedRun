@@ -2,4 +2,5 @@ name: FrozedRun
 main: me.elb1to.frozedrun.FrozedUHCRun
 version: 1.0-SNAPSHOT
 author: Elb1to
+load: STARTUP
 description: FrozedRun by Elb1to
