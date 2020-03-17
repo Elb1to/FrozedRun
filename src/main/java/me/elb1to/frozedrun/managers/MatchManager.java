@@ -3,7 +3,6 @@ package me.elb1to.frozedrun.managers;
 import me.elb1to.frozedrun.FrozedUHCRun;
 import me.elb1to.frozedrun.enums.MatchState;
 import me.elb1to.frozedrun.utils.Title;
-import me.elb1to.frozedrun.utils.tasks.ScatterTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -24,7 +23,7 @@ public class MatchManager {
             Player player = Bukkit.getPlayer(uuid);
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 1));
 
-            ScatterTask.tpRandom(player);
+            ScatteringManager.tpRandom(player);
         }
 
         task = Bukkit.getScheduler().scheduleSyncRepeatingTask(FrozedUHCRun.getInstance(), new Runnable() {
