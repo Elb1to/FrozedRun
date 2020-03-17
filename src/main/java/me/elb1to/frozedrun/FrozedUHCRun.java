@@ -4,21 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import me.elb1to.frozedrun.commands.FrozedRunCommand;
 import me.elb1to.frozedrun.commands.ScatterCommand;
-import me.elb1to.frozedrun.listeners.ItemDropListeners;
-import me.elb1to.frozedrun.listeners.MatchPvP;
-import me.elb1to.frozedrun.listeners.PlayerListener;
-import me.elb1to.frozedrun.listeners.WorldListener;
-import me.elb1to.frozedrun.managers.EventsManager;
-import me.elb1to.frozedrun.managers.MatchManager;
-import me.elb1to.frozedrun.managers.RecipesManager;
+import me.elb1to.frozedrun.listeners.*;
+import me.elb1to.frozedrun.managers.*;
 import me.elb1to.frozedrun.utils.board.BoardManager;
 import me.elb1to.frozedrun.utils.chat.Color;
 import me.elb1to.frozedrun.utils.command.CommandFramework;
 import me.elb1to.frozedrun.utils.config.ConfigFile;
-import me.elb1to.frozedrun.utils.tasks.MatchJoin;
+import me.elb1to.frozedrun.listeners.MatchJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.*;
 
 @Getter
@@ -50,15 +46,19 @@ public class FrozedUHCRun extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(Color.translate("&8[&b&lFrozedRun&8] &3has been enabled!"));
 
         // From the listeners package
-        Bukkit.getPluginManager().registerEvents(new ItemDropListeners(), this);
-        Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ItemDropListener(), this);
+        Bukkit.getPluginManager().registerEvents(new MatchJoinListener(), this);
+        Bukkit.getPluginManager().registerEvents(new LeafDecayListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-        Bukkit.getPluginManager().registerEvents(new MatchJoin(), this);
-        Bukkit.getPluginManager().registerEvents(new MatchPvP(), this);
+        Bukkit.getPluginManager().registerEvents(new WorldListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PvPListener(), this);
+        Bukkit.getPluginManager().registerEvents(new MatchListener(),this);
 
         // From the managers package
+        new ScatteringManager();
         new RecipesManager(this);
         new MatchManager();
+        new MatchEndManager();
         new EventsManager();
 
         // From the commands package
@@ -85,6 +85,22 @@ public class FrozedUHCRun extends JavaPlugin {
     @Override
     public void onDisable() {
         getServer().getConsoleSender().sendMessage(Color.translate("&8[&b&lFrozedRun&8] &3has been disabled!"));
+        File file = new File("world");
+        deleteWorld(file);
+    }
+
+    private boolean deleteWorld(File path) {
+        if (path.exists()) {
+            File files[] = path.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].isDirectory()) {
+                    deleteWorld(files[i]);
+                } else {
+                    files[i].delete();
+                }
+            }
+        }
+        return (path.delete());
     }
 
     public ConfigFile getConfiguration(String name) {
